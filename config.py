@@ -15,13 +15,13 @@ if not os.path.exists(log_dir):
 logger = logging.getLogger('translation_logger')
 logger.setLevel(logging.INFO)
 
-# 文件处理器
-file_handler = RotatingFileHandler(log_file, maxBytes=3 * 1024 * 1024, backupCount=5)
+# 文件处理器 - 指定UTF-8编码
+file_handler = RotatingFileHandler(log_file, maxBytes=3 * 1024 * 1024, backupCount=5, encoding='utf-8')
 file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 
-# 终端处理器
+# 终端处理器 - 指定UTF-8编码
 stream_handler = logging.StreamHandler(sys.stdout)
 stream_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 stream_handler.setFormatter(stream_formatter)
