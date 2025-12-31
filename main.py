@@ -70,7 +70,10 @@ class PoWalkTranslator:
         logger.info(f"正在翻译: {file_path}")
 
         po = polib.pofile(file_path)
-        untranslated_entries = po.untranslated_entries()
+        # 筛选未翻译的条目 - 只有msgstr完全为空的条目才需要翻译
+        # 这会正确处理长字符串格式，因为即使是多行的空字符串，join后也是空的
+        untranslated_entries = [entry for entry in po if not entry.msgstr and not entry.obsolete]
+        # untranslated_entries = po.untranslated_entries()  # 原来的实现
 
         if not untranslated_entries:
             logger.info("没有需要翻译的条目，跳过翻译。")
